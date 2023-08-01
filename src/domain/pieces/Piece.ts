@@ -1,27 +1,25 @@
-import { Board } from "./Board";
-import { MachinePosition, Position } from "./Position";
+import { Board } from '../Board';
+import { MachinePosition, Position } from '../Position';
 
-export type Color = 'white' | 'black';
+export enum Color {
+  WHITE,
+  BLACK,
+}
+export enum PieceType {
+  Pawn,
+  Knight,
+  Bishop,
+  Rook,
+  Queen,
+  King,
+}
 
 export abstract class Piece {
-  private _color: Color;
-  private _hasMoved = false;
-
-  constructor(color: Color) {
-    this._color = color;
-  }
-
-  get color(): Color {
-    return this._color;
-  }
-
-  get hasMoved(): boolean {
-    return this._hasMoved;
-  }
-
-  set hasMoved(hasMoved: boolean) {
-    this._hasMoved = hasMoved;
-  }
+  constructor(
+    public readonly color: Color,
+    public readonly type: PieceType,
+    public hasMoved = false,
+  ) {}
 
   public abstract validMoves(board: Board, position: Position): Position[];
 
@@ -29,7 +27,12 @@ export abstract class Piece {
     return this.validMoves(board, position);
   }
 
-  protected getMove(board: Board, position: Position, move: Readonly<[number, number]>, canCapture = true): Position | null {
+  protected getMove(
+    board: Board,
+    position: Position,
+    move: Readonly<[number, number]>,
+    canCapture = true,
+  ): Position | null {
     const [dx, dy] = move;
     const x = position.x + dx;
     const y = position.y + dy;
@@ -46,4 +49,6 @@ export abstract class Piece {
 
     return newPosition;
   }
+
+  public abstract toString(): string;
 }

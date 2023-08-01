@@ -1,26 +1,11 @@
-import { Color, Piece } from "./Piece";
-import { Position } from "./Position";
+import { Color, Piece } from './pieces/Piece';
+import { Position } from './Position';
 
 export class Square {
-  private _position: Position;
-  private _piece: Piece | null = null;
-
-  constructor(position: Position, piece: Piece | null = null) {
-    this._position = position;
-    this._piece = piece;
-  }
-
-  get position(): Position {
-    return this._position;
-  }
-
-  get piece(): Piece | null {
-    return this._piece;
-  }
-
-  set piece(piece: Piece | null) {
-    this._piece = piece;
-  }
+  constructor(
+    public readonly position: Position,
+    public piece: Piece | null = null,
+  ) {}
 
   public isOccupied(): boolean {
     return this.piece !== null;

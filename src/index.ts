@@ -1,19 +1,45 @@
-import { Position } from './domain/Position';
+import { BoardPosition, Position } from './domain/Position';
 import { Board } from './domain/Board';
-const prompt = require('prompt-sync')({sigint: true});
+import readline from 'readline/promises';
 
-const board = new Board();
+const prompt = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
 
-while (true) {
-  const humanPosition = prompt('Enter a position: ');
-  const position = Position.fromHumanPosition(humanPosition);
+const getValidPosition = async (message: string): Promise<Position> => {
+  while (true) {
+    const input = (await prompt.question(message)) as BoardPosition;
+    try {
+      const position = Position.fromHumanPosition(input);
+      return position;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      }
+      continue;
+    }
+  }
+};
 
-  board.getValidMovesAndCaptures(position).forEach((move) => {
-    console.log(move.toString());
-  });
+const playGame = async () => {
+  const board = new Board();
 
-  const humanPosition2 = prompt('Enter a position: ');
-  const position2 = Position.fromHumanPosition(humanPosition2);
+  while (true) {
+    console.log(board.toString());
 
-  board.movePiece(position, position2);
-}
+    const fromPosition = await getValidPosition('Enter a position: ');
+
+    const validMoves = board.getValidMovesAndCaptures(fromPosition).join(', ');
+    console.log(`Valid moves: ${validMoves}`);
+
+    const toPosition = await getValidPosition('Enter a position: ');
+
+    board.movePiece(fromPosition, toPosition);
+  }
+};
+
+playGame().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});

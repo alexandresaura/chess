@@ -1,14 +1,16 @@
 export const columns = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'] as const;
 export const lines = ['1', '2', '3', '4', '5', '6', '7', '8'] as const;
 
-type XHumanPosition = typeof columns[number];
-type YHumanPosition = typeof lines[number];
+type XHumanPosition = (typeof columns)[number];
+type YHumanPosition = (typeof lines)[number];
 
-const machinePosition = [0, 1, 2, 3, 4, 5, 6, 7] as const;
+export type BoardPosition = `${XHumanPosition}${YHumanPosition}`;
+export const boardPositions = columns
+  .map((column) => lines.map((line) => `${column}${line}`))
+  .flat() as BoardPosition[];
 
-export type MachinePosition = typeof machinePosition[number];
-
-type BoardPosition = `${XHumanPosition}${YHumanPosition}`;
+export const machinePosition = [0, 1, 2, 3, 4, 5, 6, 7] as const;
+export type MachinePosition = (typeof machinePosition)[number];
 
 export type PositionMap = {
   [key in MachinePosition]: {
@@ -16,15 +18,20 @@ export type PositionMap = {
   };
 };
 
-
 export class Position {
-  private static _positions = machinePosition.reduce((accColumn, column) => ({
-    ...accColumn,
-    [column]: machinePosition.reduce((accLine, line) => ({
-      ...accLine,
-      [line]: new Position(column, line),
-    }), {}),
-  }), {} as PositionMap);
+  private static positions = machinePosition.reduce(
+    (accColumn, column) => ({
+      ...accColumn,
+      [column]: machinePosition.reduce(
+        (accLine, line) => ({
+          ...accLine,
+          [line]: new Position(column, line),
+        }),
+        {},
+      ),
+    }),
+    {} as PositionMap,
+  );
 
   private _x: MachinePosition;
   private _y: MachinePosition;
@@ -64,13 +71,13 @@ export class Position {
 
     if (!Position.isValidMachinePosition(x) || !Position.isValidMachinePosition(y)) throw new Error('Invalid position');
 
-    return Position._positions[x][y];
+    return Position.positions[x][y];
   }
 
   public static fromMachinePosition(x: MachinePosition, y: MachinePosition): Position {
     if (!Position.isValidMachinePosition(x) || !Position.isValidMachinePosition(y)) throw new Error('Invalid position');
 
-    return Position._positions[x][y];
+    return Position.positions[x][y];
   }
 
   public static isValidMachinePosition(position: number): boolean {

@@ -1,8 +1,12 @@
-import { Piece } from "./Piece";
-import { Board } from "./Board";
-import { Position } from "./Position";
+import { Color, Piece, PieceType } from './Piece';
+import { Board } from '../Board';
+import { Position } from '../Position';
 
 export class Queen extends Piece {
+  constructor(color: Color) {
+    super(color, PieceType.Knight);
+  }
+
   public validMoves(board: Board, position: Position): Position[] {
     const moves = [
       [1, 0],
@@ -33,5 +37,9 @@ export class Queen extends Piece {
     }, []);
 
     return validMoves;
+  }
+
+  public toString(): string {
+    return this.color === Color.WHITE ? '♕' : '♛';
   }
 }
