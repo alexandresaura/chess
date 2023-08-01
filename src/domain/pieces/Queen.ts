@@ -7,7 +7,7 @@ export class Queen extends Piece {
     super(color, PieceType.Knight);
   }
 
-  public validMoves(board: Board, position: Position): Position[] {
+  public getValidMoves(board: Board, position: Position): Position[] {
     const moves = [
       [1, 0],
       [0, 1],

@@ -7,7 +7,7 @@ export class Bishop extends Piece {
     super(color, PieceType.Bishop);
   }
 
-  public validMoves(board: Board, position: Position): Position[] {
+  public getValidMoves(board: Board, position: Position): Position[] {
     const moves = [
       [1, 1],
       [-1, 1],

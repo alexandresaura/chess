@@ -3,7 +3,7 @@ import { Position } from '../Position';
 import { PieceType } from '../pieces/Piece';
 
 describe('Board', () => {
-  describe('getValidMoves', () => {
+  describe('getValidMovesAndCaptures', () => {
     it('should return the correct valid moves for a piece', () => {
       const board = new Board();
       const validMoves = board.getValidMovesAndCaptures(Position.fromHumanPosition('e2'));

@@ -19,7 +19,7 @@ export class Pawn extends Piece {
     return this.getMove(board, position, move, false);
   }
 
-  public validMoves(board: Board, position: Position): Position[] {
+  public getValidMoves(board: Board, position: Position): Position[] {
     const validMoves: Position[] = [];
 
     const defaultMove = this.defaultMove(board, position);
@@ -60,7 +60,7 @@ export class Pawn extends Piece {
     return validEnPassantCaptureMoves;
   };
 
-  public validCaptureMoves(board: Board, position: Position): Position[] {
+  public getValidCaptureMoves(board: Board, position: Position): Position[] {
     const captureMoves: [number, number][] =
       this.color === Color.WHITE
         ? [

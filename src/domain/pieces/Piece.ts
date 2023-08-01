@@ -21,10 +21,10 @@ export abstract class Piece {
     public hasMoved = false,
   ) {}
 
-  public abstract validMoves(board: Board, position: Position): Position[];
+  public abstract getValidMoves(board: Board, position: Position): Position[];
 
-  public validCaptureMoves(board: Board, position: Position): Position[] {
-    return this.validMoves(board, position);
+  public getValidCaptureMoves(board: Board, position: Position): Position[] {
+    return this.getValidMoves(board, position);
   }
 
   protected getMove(
