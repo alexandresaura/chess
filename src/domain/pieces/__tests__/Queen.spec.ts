@@ -15,28 +15,11 @@ describe('Queen', () => {
       const validMovesPositions = validMoves.map((move) => move.toString());
 
       expect(validMovesPositions).toEqual(
+        // prettier-ignore
         expect.arrayContaining([
-          'a1',
-          'b2',
-          'c3',
-          'e5',
-          'f6',
-          'g7',
-          'h8', // Diagonal moves
-          'd1',
-          'd2',
-          'd3',
-          'd5',
-          'd6',
-          'd7',
-          'd8', // Vertical moves
-          'a4',
-          'b4',
-          'c4',
-          'e4',
-          'f4',
-          'g4',
-          'h4', // Horizontal moves
+          'a1', 'b2', 'c3', 'e5', 'f6', 'g7', 'h8', // Diagonal moves
+          'd1', 'd2', 'd3', 'd5', 'd6', 'd7', 'd8', // Vertical moves
+          'a4', 'b4', 'c4', 'e4', 'f4', 'g4', 'h4', // Horizontal moves
         ]),
       );
     });
@@ -62,15 +45,9 @@ describe('Queen', () => {
       );
 
       expect(validMovesPositions).not.toEqual(
+        // prettier-ignore
         expect.arrayContaining([
-          'a1',
-          'e5',
-          'g7',
-          'h8',
-          'e3',
-          'c3',
-          'c5',
-          'h1', // Invalid moves
+          'a1', 'e5', 'g7', 'h8', 'e3', 'c3', 'c5', 'h1', // Invalid moves
         ]),
       );
     });
